@@ -3,6 +3,7 @@ CSE 3310
 This repository contains all the game code for the BunnyWars game. I have finalized and debugged the game, so it is now fully functional. Please download the code to your computer. We will be turning this game into a website, which will require knowledge of html. Majority of the game code can be used.
 
 *NOTICE*
+
 we have to add a time constraint to the code! To keep the website interesting
 
 ASSIGNMENT 1: UML DIAGRAMS due 2/25
@@ -10,6 +11,7 @@ General guidelines for what type of UML to pick (always use different types of U
 different components based on the nature of the component as described below).
 
  Use:
+ 
 o Class Diagram: If the component is static, without much going back and forth, i.e., you
 just want to show what is in that component.
 o State Transition Diagram (STD): If the behavior is dynamic like Login & Registration or
