@@ -33,5 +33,4 @@ STD-Login& Registration” or “UML-Class-Diagram-System” ...)
 per page). If UML is too big, it usually means your component is too complicated with too many
 details, and it is best if it is broken into two or more smaller UML diagrams.
 
-• Please find various UML samples on the following pages.
 
