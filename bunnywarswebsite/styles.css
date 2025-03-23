@@ -1,0 +1,76 @@
+/* General body styling */
+body {
+    background-color: black; /* Dark background */
+    color: limegreen; /* Green text */
+    font-family: "Courier New", Courier, monospace; /* Monospace font */
+    margin: 0;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+/* Game title styling */
+h1 {
+    color: limegreen;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Game output area styling */
+#game-output {
+    background-color: black;
+    border: 2px solid limegreen;
+    padding: 15px;
+    height: 400px; /* Fixed height for the console */
+    overflow-y: scroll; /* Enable scrolling */
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    white-space: pre-wrap; /* Preserve formatting and line breaks */
+}
+
+/* Input field styling */
+#game-input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: black;
+    color: limegreen;
+    border: 2px solid limegreen;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+/* Submit button styling */
+#submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: limegreen;
+    color: black;
+    border: none;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+#submit-button:hover {
+    background-color: green; /* Darker green on hover */
+}
+
+/* Scrollbar styling for the game output */
+#game-output::-webkit-scrollbar {
+    width: 10px;
+}
+
+#game-output::-webkit-scrollbar-track {
+    background: black;
+}
+
+#game-output::-webkit-scrollbar-thumb {
+    background: limegreen;
+    border-radius: 5px;
+}
+
+#game-output::-webkit-scrollbar-thumb:hover {
+    background: green;
+}
