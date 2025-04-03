@@ -13,7 +13,6 @@ public class Dungeon {
             showDungeonEntrance();
             hasEnteredDungeon = true;
         }
-
         System.out.println("Dungeon Levels:");
         System.out.println("1) Level 1: Addition & Subtraction");
         if (player.getLevelsCompleted() >= 1) 
@@ -94,7 +93,9 @@ public class Dungeon {
         showLevelScreen(1, "Addition & Subtraction");
         replenishHealth(player);
         fightLevel(input, player, 50, "level1");
-        player.incrementLevelsCompleted();
+        if (player.getLevelsCompleted() == 1){
+            player.incrementLevelsCompleted();
+        }
     }
 
     private static void levelTwo(Scanner input, Player player) 
@@ -102,7 +103,9 @@ public class Dungeon {
         showLevelScreen(2, "Multiplication");
         replenishHealth(player);
         fightLevel(input, player, 100, "level2");
-        player.incrementLevelsCompleted();
+        if (player.getLevelsCompleted() == 2){
+            player.incrementLevelsCompleted();
+        }
     }
 
     private static void levelThree(Scanner input, Player player) 
@@ -110,7 +113,9 @@ public class Dungeon {
         showLevelScreen(3, "Exponents");
         replenishHealth(player);
         fightLevel(input, player, 150, "level3");
-        player.incrementLevelsCompleted();
+        if (player.getLevelsCompleted() == 3){
+            player.incrementLevelsCompleted();
+        }
     }
 
     private static void bossBattle(Scanner input, Player player) 

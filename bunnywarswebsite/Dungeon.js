@@ -198,7 +198,9 @@ class Dungeon {
         }
 
         if (player.getHealthBar() > 0 && monsterHealth <= 0) {
-            player.incrementLevelsCompleted();
+            if(parseInt(level.charAt(level.length - 1),10) - 1 == player.getLevelsCompleted()){
+                player.incrementLevelsCompleted();
+            }
             displayMessage("You defeated the monster!");
             console.log(player.getLevelsCompleted())
             player.setBudget(player.getBudget() + 50);
