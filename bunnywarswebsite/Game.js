@@ -1,4 +1,54 @@
 class Game {
+    static async introduction() {
+        try {
+            // 배경 로드 후 그리기
+            await GraphicsManager.loadSprite('bg_intro', './assets/bg_intro.png');
+            GraphicsManager.drawBackground('bg_intro'); // 배경 그리기
+
+            // 스프라이트 로드 후 그리기
+            await GraphicsManager.loadSprite('bunny', './assets/bunny_default.png');
+            GraphicsManager.drawSprite('bunny', 50, 50, 100, 100); // 스프라이트 그리기
+
+            // 텍스트 출력
+            await typeMessage(`
+                Welcome to Bunny Wars!
+
+                You are on an adventure as the solo Bunny Hero!
+                Solve six challenging math levels to defeat
+                the Evil Bunny Master's minions and face off
+                against the ultimate EVIL BUNNY BOSS to save the world!
+
+                NOTICE: You may purchase new unique weapons
+                and gear from the shop to increase offensive
+                and defensive stats.
+
+                Press Enter to continue...
+            `);
+            // 키 입력 대기
+            await Game.waitForEnter();
+            await Game.menu(); // 메인 메뉴로 이동
+        } catch (error) {
+            console.error(error); // 로드 실패 시 에러 처리
+        }
+    }
+
+    static async menu() {
+        clearCanvas(); // 캔버스 초기화
+        GraphicsManager.drawBackground('bg_intro'); // 메뉴 배경 그리기
+        const menuBox = document.getElementById('menuBox');
+        menuBox.style.display = 'block'; // 메뉴 박스 보이기
+        
+        // 버튼 클릭을 기다리는 Promise 반환
+        const choice = await new Promise(resolve => {
+            document.getElementById("startBtn").onclick = () => resolve(1);
+            document.getElementById("shopBtn").onclick = () => resolve(2);
+            document.getElementById("exitBtn").onclick = () => resolve(3);
+        });
+
+        menuBox.style.display = 'none';
+        return choice;
+    }
+
     static getRandomNumber1to9() {
         return Math.floor(Math.random() * 9) + 1;
     }
@@ -14,35 +64,16 @@ class Game {
     static getRandomNumber1to3() {
         return Math.floor(Math.random() * 3) + 1;
     }
-
-    static introduction() {
-        displayMessage(`
-            Welcome to Bunny Wars!
-
-            (\\__/)
-            (. ,, .)
-            (0      0)
-            O------O
-
-            You are on an adventure as the solo Bunny Hero! Solve six challenging math levels to defeat the Evil Bunny Master's minions and face off against the ultimate EVIL BUNNY BOSS to save the world!
-            NOTICE: You may purchase new unique weapons and gear from the shop to increase offensive and defensive stats.
-        `);
-    }
-
-    static async menu() {
-        const choice = await getPlayerInput(`
-            (\\__/)
-            Main Menu Options
-            ------------------------
-            | 1) Fight             |
-            |                      |
-            | 2) Shop              |
-            |                      |
-            | 3) Exit Game         |
-            ------------------------
-            Please enter your choice:
-        `);
-        return parseInt(choice, 10); // Convert the input to a number
+    static waitForEnter() {
+        return new Promise((resolve) => {
+            const handleKeyPress = (event) => {
+                if (event.key === "Enter") {
+                    document.removeEventListener("keydown", handleKeyPress);
+                    resolve();
+                }
+            };
+            document.addEventListener("keydown", handleKeyPress);
+        });
     }
 
     static generateQuestion(level) {

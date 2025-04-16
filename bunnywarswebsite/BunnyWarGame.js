@@ -2,8 +2,7 @@ class BunnyWarGame {
     static async main() {
         const player = new Player();
 
-        Game.introduction();
-
+        await Game.introduction();
         while (true) {
             const option = await Game.menu();
 
@@ -18,4 +17,3 @@ class BunnyWarGame {
         }
     }
 }
-

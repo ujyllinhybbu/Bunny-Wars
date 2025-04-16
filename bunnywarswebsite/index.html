@@ -7,16 +7,24 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Bunny War Game</h1>
-    <div id="game-output"></div>
-    <input type="text" id="game-input" placeholder="Enter your choice...">
+    <div id="gameContainer">
+        <canvas id="bgCanvas" width="1300" height="600"></canvas>
+        <div id = "menuBox">
+            <img src="./assets/bunny_icon.png" alt="Bunny Icon" id="bunnyIcon">
+            <h2>Menu</h2>
+                <button id="startBtn">Start Game</button>
+                <button id="shopBtn">Shop</button>
+                <button id="exitBtn">Exit</button>
+        </div>
+    </div>
+    <<input type="text" id="game-input" placeholder="Enter your choice...">
     <button id="submit-button">Submit</button>
-
     <!-- Include utils.js first -->
     <script src="utils.js"></script>
     <script src="Player.js"></script>
     <script src="Game.js"></script>
-    <script src="Dungeon.js"></script>
+    <script src="GraphicsManager.js"></script>
+    <script src="Dungeon.js"></script>  
     <script src="Shop.js"></script>
     <script src="ScreenVisuals.js"></script>
     <script src="BunnyWarGame.js"></script>
