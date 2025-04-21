@@ -1,4 +1,5 @@
-/* General body styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');/* General body styling */
 body, html {
     margin: 0;
     padding: 0;
@@ -19,9 +20,26 @@ canvas {
     width: 100%; /* Stretch to fill the width */
     height: 100%; /* Stretch to fill the height */
 }
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 #menuBox {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  
+    width: 460px;
+    padding: 40px 30px 30px 30px;
+    background-color: #fff7e3;
+    border: 6px solid #6b3e26;
+    border-radius: 12px;
+    font-family: 'Press Start 2P', Courier, monospace;
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 0 8px 0 #dca37c, 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  #dungeonMenuBox {
     display: none; /* Hidden by default */
     position: absolute;
     top: 50%;
@@ -131,4 +149,35 @@ canvas {
 
 #game-output::-webkit-scrollbar-thumb:hover {
     background: green;
+}
+
+#timer-container {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translateX(-50%);
+  display: none; /* 기본 숨김 */
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  color: white;
+  text-shadow: 1px 1px black;
+  align-items: center;
+}
+#timer-bar {
+  width: 200px;
+  height: 10px;
+  background: #444;
+  margin-right: 8px;
+  border: 2px solid #222;
+  overflow: hidden;
+}
+#timer-progress {
+  width: 100%;
+  height: 100%;
+  background: limegreen;
+  transition: width 0.2s linear;
+}
+#timer-text {
+  min-width: 24px;
+  text-align: right;
 }

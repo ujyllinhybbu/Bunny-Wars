@@ -12,11 +12,23 @@
         <div id = "menuBox">
             <img src="./assets/bunny_icon.png" alt="Bunny Icon" id="bunnyIcon">
             <h2>Menu</h2>
-                <button id="startBtn">Start Game</button>
-                <button id="shopBtn">Shop</button>
-                <button id="exitBtn">Exit</button>
+            <button id="startBtn">Start Game</button>
+            <button id="shopBtn">Shop</button>
+            <button id="exitBtn">Exit</button>
         </div>
+        <div id="dungeonMenuBox">
+            <h2>Choose a Level</h2>
+            <button id="level1Btn">Level 1</button>
+            <button id="level2Btn">Level 2</button>
+            <button id="level3Btn">Level 3</button>
+            <button id="bossBtn">Boss Battle</button>
+            <button id="exitDungeonBtn">Exit</button>
+          </div>
     </div>
+    <div id="timer-container">
+        <div id="timer-bar"><div id="timer-progress"></div></div>
+        <span id="timer-text">10</span>s
+      </div>
     <<input type="text" id="game-input" placeholder="Enter your choice...">
     <button id="submit-button">Submit</button>
     <!-- Include utils.js first -->

@@ -2,6 +2,7 @@
 const bgCanvas = document.getElementById('bgCanvas');
 const bgCtx = bgCanvas.getContext('2d');
 
+
 // Store all images/sprites
 const sprites = {};
 
@@ -62,68 +63,96 @@ function drawBackground(name){
     }
 }
 
-function typeMessage(message, bgName = null, x = 50, y = 50, lineHeight = 28, typingSpeed = 10) {
+function typeMessage(message, x = 50, y = 50, lineHeight = 28, typingSpeed = 10) {
 
-    if (bgName) {
-        GraphicsManager.drawBackground(bgName); // Draw the background if specified
-    }
-
-    bgCtx.fillStyle = 'white'; // Set text color
-    bgCtx.font = '20px Courier New'; // Set font style and size
-    bgCtx.strokeStyle = 'black'; // Set stroke color
-    bgCtx.lineWidth = 2; // Set stroke width
-    bgCtx.fillStyle = "rgb(255, 255, 255)";
-    bgCtx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Set shadow color
+    bgCtx.fillStyle = 'white';
+    bgCtx.font = '20px Courier New';
+    bgCtx.strokeStyle = 'black';
+    bgCtx.lineWidth = 2;
+    bgCtx.shadowColor = "rgba(0, 0, 0, 0.5)";
     bgCtx.shadowBlur = 2;
     bgCtx.shadowOffsetX = 2;
     bgCtx.shadowOffsetY = 2;
 
-    const lines = message.split('\n'); // Split the message into lines
+    const lines = message.split('\n');
     let currentLine = 0;
     let currentChar = 0;
+    let timeoutId = null;
 
     return new Promise((resolve) => {
+        // 공통 완료 함수
+        function finishTyping() {
+            clearTimeout(timeoutId);
+            window.removeEventListener('keydown', onKeyDown);
+            displayMessage(message);
+            resolve();
+        }
+
+        // Enter 키 스킵 핸들러
+        function onKeyDown(event) {
+            if (event.key === 'Enter') {
+                finishTyping();
+            }
+        }
+        window.addEventListener('keydown', onKeyDown);
+
+        function onClick(event) {
+            const id = event.target.id;
+            if (id === 'level1Btn' || id === 'level2Btn' || id === 'level3Btn') {
+                finishTyping();
+            }
+        }
+        window.addEventListener('click', onClick);
+
+        // 실제 타이핑
         function typeNext() {
             if (currentLine >= lines.length) {
-                resolve(); // Resolve the promise when all lines are typed
+                window.removeEventListener('keydown', onKeyDown);
+                window.removeEventListener('click', onClick);
+                resolve();
                 return;
             }
 
             const line = lines[currentLine];
-            const partial = line.substring(0, currentChar + 1); // Get the current portion of the line
-            const yPosition = y + currentLine * lineHeight; // Calculate the y position for the current line
+            const partial = line.substring(0, currentChar + 1);
+            const yPos = y + currentLine * lineHeight;
 
-            bgCtx.strokeText(partial, x, yPosition); // Draw the text with stroke
-            bgCtx.fillText(partial, x, yPosition); // Draw the text with fill
+            bgCtx.strokeText(partial, x, yPos);
+            bgCtx.fillText(partial, x, yPos);
 
             currentChar++;
-
             if (currentChar < line.length) {
-                setTimeout(typeNext, typingSpeed); // Continue typing the current line
+                timeoutId = setTimeout(typeNext, typingSpeed);
             } else {
                 currentLine++;
                 currentChar = 0;
-                setTimeout(typeNext, typingSpeed); // Move to the next line
+                timeoutId = setTimeout(typeNext, typingSpeed);
             }
         }
-         // Handle Enter key press
-         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                currentLine = lines.length; // Skip to the end
-                displayMessage(message); // Display the full message
-                console.log("Message skipped by user.");
-                window.removeEventListener('keydown', handleKeyPress); // Remove the event listener
-                resolve(); // Resolve the promise immediately
-            }
-        }
-        window.addEventListener('keydown', handleKeyPress); // Add the event listener
-        typeNext(); // Start typing the message
+
+        typeNext();
     });
 }
 
 function clearCanvas() {
     bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height); // 캔버스 전체 지우기
 }
+
+function drawQuestionCentered(text) {
+    const ctx = GraphicsManager.bgCtx;
+    const centerX = bgCanvas.width / 2;
+    const centerY = bgCanvas.height / 3;
+
+    ctx.font = '24px Courier New';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'white';
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+
+    ctx.strokeText(text, centerX, centerY);
+    ctx.fillText(text, centerX, centerY);
+}
+
 
 window.GraphicsManager = {
     bgCtx,
@@ -133,4 +162,5 @@ window.GraphicsManager = {
     clearCanvas,
     drawBackground,
     typeMessage,
+    drawQuestionCentered
 };

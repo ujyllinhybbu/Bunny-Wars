@@ -6,8 +6,8 @@ class Game {
             GraphicsManager.drawBackground('bg_intro'); // 배경 그리기
 
             // 스프라이트 로드 후 그리기
-            await GraphicsManager.loadSprite('bunny', './assets/bunny_default.png');
-            GraphicsManager.drawSprite('bunny', 50, 50, 100, 100); // 스프라이트 그리기
+            await GraphicsManager.loadSprite('bunny_default', './assets/bunny_default.png');
+            GraphicsManager.drawSprite('bunny_default', 50, 50, 100, 100); // 스프라이트 그리기
 
             // 텍스트 출력
             await typeMessage(`
@@ -26,10 +26,21 @@ class Game {
             `);
             // 키 입력 대기
             await Game.waitForEnter();
-            await Game.menu(); // 메인 메뉴로 이동
         } catch (error) {
             console.error(error); // 로드 실패 시 에러 처리
         }
+    }
+
+    static waitForEnter() {
+        return new Promise((resolve) => {
+            const handleKeyPress = (event) => {
+                if (event.key === "Enter") {
+                    document.removeEventListener("keydown", handleKeyPress);
+                    resolve();
+                }
+            };
+            document.addEventListener("keydown", handleKeyPress);
+        });
     }
 
     static async menu() {
@@ -63,17 +74,6 @@ class Game {
 
     static getRandomNumber1to3() {
         return Math.floor(Math.random() * 3) + 1;
-    }
-    static waitForEnter() {
-        return new Promise((resolve) => {
-            const handleKeyPress = (event) => {
-                if (event.key === "Enter") {
-                    document.removeEventListener("keydown", handleKeyPress);
-                    resolve();
-                }
-            };
-            document.addEventListener("keydown", handleKeyPress);
-        });
     }
 
     static generateQuestion(level) {

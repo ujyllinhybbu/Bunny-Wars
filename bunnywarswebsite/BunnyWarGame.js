@@ -5,7 +5,6 @@ class BunnyWarGame {
         await Game.introduction();
         while (true) {
             const option = await Game.menu();
-
             if (option === 1) {
                 await Dungeon.fightMenu(player);
             } else if (option === 2) {
