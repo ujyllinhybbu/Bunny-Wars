@@ -1,91 +1,139 @@
 class Shop {
     static async shopMenu(player) {
-        while (true) {
-            const choice = await getPlayerInput(`
-                (\\__/)
-                Bunny Shop Menu
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                | 1) Buy Weapons           |
-                |                          |
-                | 2) Buy Shields           |
-                |                          |
-                | 3) Exit Shop             |
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                Please enter your choice:
-            `);
-
-            if (choice == 3) {
-                displayMessage("Thank you for visiting the Bunny Shop! Come back soon!");
-                break;
-            }
-
-            switch (choice) {
-                case '1': await Shop.buyWeapon(player); break;
-                case '2': await Shop.buyShield(player); break;
-                default: displayMessage("Oops! That wasn't a valid choice. Please try again!");
-            }
+        const shopMenuBox = document.getElementById('shopMenuBox');
+        const buyWeaponBtn = document.getElementById('buyWeaponBtn');
+        const buyShieldBtn = document.getElementById('buyShieldBtn');
+        const exitShopBtn = document.getElementById('exitShopBtn');
+        // Update display values
+        document.getElementById('currentDamage').textContent = player.getWeaponDamage();
+        document.getElementById('currentCoins').textContent = player.getBudget();
+        document.getElementById('currentProtection').textContent = player.getShieldProtection();
+        
+        shopMenuBox.style.display = 'block';
+        let choice;
+        // wait for button click
+        choice = await new Promise(resolve => {
+          buyWeaponBtn.onclick = () => resolve('1');
+          buyShieldBtn.onclick = () => resolve('2');
+          exitShopBtn.onclick = () => resolve('3');
+        });
+        shopMenuBox.style.display = 'none';
+    
+        switch (choice) {
+            case '1': await Shop.buyWeapon(player); break;
+            case '2': await Shop.buyShield(player); break;
+            case '3': return;
         }
+        // loop back to shop menu until exit
+        return Shop.shopMenu(player);
     }
 
-    static async buyWeapon(player) {
-        const choice = await getPlayerInput(`
-            (\\__/)
-            Choose Your Weapon
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            | 1) Carved Bun Katana - 100 coins (+10 damage) |
-            | 2) Carrot Slicer - 200 coins (+20 damage)     |
-            | 3) Teeth Splitter - 300 coins (+30 damage)    |
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            Which weapon will you choose?
-        `);
 
+    static async buyWeapon(player) {
+        const weaponMenu = document.getElementById('weaponMenu');
+        const shopMenuBox = document.getElementById('shopMenuBox');
+        weaponMenu.style.display = 'block';
+        shopMenuBox.style.display = 'none';
+        // Insert weapon images
+        document.getElementById('weapon1Img').src = './assets/carved_bun_katana.png';
+        document.getElementById('weapon2Img').src = './assets/carrot_slicer.png';
+        document.getElementById('weapon3Img').src = './assets/teeth_splitter.png';
+        const backBtn = document.getElementById('weaponBackBtn');
+        backBtn.onclick = () => {
+            weaponMenu.style.display = 'none';
+            shopMenuBox.style.display = 'block';
+        };
+
+        // Enable/disable buttons based on player's budget
+        const budget = player.getBudget();
+        const weapon1Btn = document.getElementById('weapon1');
+        const weapon2Btn = document.getElementById('weapon2');
+        const weapon3Btn = document.getElementById('weapon3');
+        
+        weapon1Btn.disabled = budget < 100;
+        weapon2Btn.disabled = budget < 200;
+        weapon3Btn.disabled = budget < 300;
+    
+        const choice = await new Promise(resolve => {
+            if (!weapon1Btn.disabled) weapon1Btn.onclick = () => resolve('1');
+            if (!weapon2Btn.disabled) weapon2Btn.onclick = () => resolve('2');
+            if (!weapon3Btn.disabled) weapon3Btn.onclick = () => resolve('3');
+            if (backBtn) backBtn.onclick = () => resolve('4');
+        });
         let cost = 0;
         let damageIncrease = 0;
-
+    
         switch (choice) {
             case '1': cost = 100; damageIncrease = 10; break;
             case '2': cost = 200; damageIncrease = 20; break;
             case '3': cost = 300; damageIncrease = 30; break;
-            default: displayMessage("Sorry, that weapon is not available. Please choose again!"); return;
+            case '4':
+                weaponMenu.style.display = 'none';
+                shopMenuBox.style.display = 'block';
+                return;
         }
-
+    
         if (player.getBudget() >= cost) {
             player.setBudget(player.getBudget() - cost);
             player.setWeaponDamage(player.getWeaponDamage() + damageIncrease);
-            displayMessage("You purchased a new weapon! Go fight with bravery!");
+            displayMessage("You purchased a new weapon!");
         } else {
-            displayMessage("Oops! You don't have enough coins! Maybe try saving up!");
+            displayMessage("Oops! You don't have enough coins!");
         }
+        weaponMenu.style.display = 'none';
+        shopMenuBox.style.display = 'block';
     }
-
+    
     static async buyShield(player) {
-        const choice = await getPlayerInput(`
-            (\\__/)
-            Choose Your Shield
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            | 1) Baneful Bun - 100 coins (+10 protection)     |
-            | 2) Wall of Carrots - 200 coins (+20 protection) |
-            | 3) Eternal Rabbit - 300 coins (+30 protection)  |
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            Which shield will protect you?
-        `);
+        const shieldMenu = document.getElementById('shieldMenu');
+        const shopMenuBox = document.getElementById('shopMenuBox');
+        shieldMenu.style.display = 'block';
+        shopMenuBox.style.display = 'none';
+    
+        const backBtn = document.getElementById('shieldBackBtn');
+        backBtn.onclick = () => {
+            shieldMenu.style.display = 'none';
+            shopMenuBox.style.display = 'block';
+        };
 
+        // Enable/disable buttons based on player's budget
+        const budget = player.getBudget();
+        const shield1Btn = document.getElementById('shield1');
+        const shield2Btn = document.getElementById('shield2');
+        const shield3Btn = document.getElementById('shield3');
+        
+        shield1Btn.disabled = budget < 100;
+        shield2Btn.disabled = budget < 200;
+        shield3Btn.disabled = budget < 300;
+    
+        const choice = await new Promise(resolve => {
+            if (!shield1Btn.disabled) shield1Btn.onclick = () => resolve('1');
+            if (!shield2Btn.disabled) shield2Btn.onclick = () => resolve('2');
+            if (!shield3Btn.disabled) shield3Btn.onclick = () => resolve('3');
+            if (backBtn) backBtn.onclick = () => resolve('4');
+        });
+    
         let cost = 0;
         let protectionIncrease = 0;
-
+    
         switch (choice) {
             case '1': cost = 100; protectionIncrease = 10; break;
             case '2': cost = 200; protectionIncrease = 20; break;
             case '3': cost = 300; protectionIncrease = 30; break;
-            default: displayMessage("Oops, that shield isn't available! Try again!"); return;
+            case '4':
+                shieldMenu.style.display = 'none';
+                shopMenuBox.style.display = 'block';
+                return;
         }
-
+    
         if (player.getBudget() >= cost) {
             player.setBudget(player.getBudget() - cost);
             player.setShieldProtection(player.getShieldProtection() + protectionIncrease);
-            displayMessage("You now have a powerful shield to protect you!");
+            displayMessage("You purchased a new shield!");
         } else {
-            displayMessage("Not enough coins! Maybe next time!");
+            displayMessage("Oops! You don't have enough coins!");
         }
+        shieldMenu.style.display = 'none';
+        shopMenuBox.style.display = 'block';
     }
 }

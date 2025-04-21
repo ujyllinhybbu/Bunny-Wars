@@ -9,22 +9,19 @@ class Dungeon {
         const dungeonMenuBox = document.getElementById('dungeonMenuBox');
         dungeonMenuBox.style.display = 'block';
 
-        // 플레이어 레벨 클리어 상태 가져오기
         const levelCompleted = player.getLevelsCompleted();
 
-        // 버튼 가져오기
         const level1Btn = document.getElementById("level1Btn");
         const level2Btn = document.getElementById("level2Btn");
         const level3Btn = document.getElementById("level3Btn");
         const bossBtn = document.getElementById("bossBtn");
 
-        // 잠금 상태 설정
+        // lock levels
         level1Btn.disabled = false;
         level2Btn.disabled = levelCompleted < 1;
         level3Btn.disabled = levelCompleted < 2;
         bossBtn.disabled = levelCompleted < 3;
 
-        // 잠금 스타일 적용
         level2Btn.innerText = levelCompleted < 1 ? "Level 2 🔒" : "Level 2";
         level3Btn.innerText = levelCompleted < 2 ? "Level 3 🔒" : "Level 3";
         bossBtn.innerText = levelCompleted < 3 ? "Boss Battle 🔒" : "Boss Battle";
@@ -156,55 +153,6 @@ class Dungeon {
         Dungeon.replenishHealth(player);
         await Dungeon.fightLevel(player, 250, "boss");
     }
-        /*let bossHealth = 300;
-        ScreenVisuals.fightScreenBoss();
-
-        while (player.getHealthBar() > 0 && bossHealth > 0) {
-            const question = Game.generateQuestion("boss");
-            const playerAnswer = parseInt(await getPlayerInput(`Question: ${question}\nEnter answer: `), 10);
-
-            const correctAnswer = Game.evaluateQuestion(question);
-            if (playerAnswer === correctAnswer) {
-                displayMessage(`Correct! You dealt ${player.getWeaponDamage()} damage!`);
-                ScreenVisuals.doesDamageBoss();
-                bossHealth -= player.getWeaponDamage();
-            } else {
-                displayMessage("Wrong! You took damage.");
-                ScreenVisuals.takeDamageBoss();
-                const damageTaken = Game.calculateDamage("boss", player.getShieldProtection());
-                player.setHealthBar(player.getHealthBar() - damageTaken);
-            }
-
-            displayMessage(`
-                -- Battle Status --
-                Player HP: ${player.getHealthBar()}
-                Boss HP: ${bossHealth}
-                -------------------
-            `);
-        }
-
-        if (player.getHealthBar() > 0 && bossHealth <= 0) {
-            console.log("level completed!")
-            displayMessage("Congratulations! You defeated the Boss Bunny!");
-            player.incrementLevelsCompleted();
-            player.setBudget(player.getBudget() + 200);
-            ScreenVisuals.winBossBattleScreen();
-            displayMessage(`
-                ===============================================
-                THANK YOU FOR PLAYING BUNNY WAR!
-                The land is now safe, thanks to you!
-                ===============================================
-            `);
-            return;
-        } else {
-            console.log("level not completed!")
-            displayMessage("You were defeated by the Boss Bunny...");
-            player.setBudget(player.getBudget() - 50);
-            ScreenVisuals.trainAndComeBackScreen();
-        }
-
-        displayMessage(`Your current budget: ${player.getBudget()}`);*/
-    
 
     static async fightLevel(player, monsterHealth, level) {
         level = level.trim().toLowerCase();
@@ -226,14 +174,11 @@ class Dungeon {
             const question = Game.generateQuestion(level);
             const raw = await getPlayerInputWithTimeout(
                 `Question: ${question}\nEnter answer: `, 
-                10000  // 10초 제한
+                10000  // 10sec limit
             );
             let playerAnswer;
             
             if (raw === null) {
-                // 타임아웃
-                displayMessage("⏰ Time's up! You took damage.");
-                // 원하는 대미지 이펙트 호출
                 switch (level) {
                     case "level1": ScreenVisuals.takeDamage1(); break;
                     case "level2": ScreenVisuals.takeDamage2(); break;
@@ -244,28 +189,25 @@ class Dungeon {
                 player.setHealthBar(player.getHealthBar() - damageTaken);
             } 
             else {
-                // 한 번 submit으로 바로 처리하도록 변경 // CHANGED
-                const playerAnswer = parseInt(raw, 10); // CHANGED
-                const correctAnswer = Game.evaluateQuestion(question); // unchanged
+                const playerAnswer = parseInt(raw, 10); 
+                const correctAnswer = Game.evaluateQuestion(question);
                 if (playerAnswer === correctAnswer) {
-                    displayMessage(`✅ Correct! You dealt ${player.getWeaponDamage()} damage!`); // unchanged
                     switch (level) {
                         case 'level1': ScreenVisuals.doesDamage1(); break;
                         case 'level2': ScreenVisuals.doesDamage2(); break;
                         case 'level3': ScreenVisuals.doesDamage3(); break;
                         case 'boss':  ScreenVisuals.doesDamageBoss();  break;
                     }
-                    monsterHealth -= player.getWeaponDamage(); // unchanged
+                    monsterHealth -= player.getWeaponDamage();
                 } else {
-                    displayMessage("❌ Wrong! You took damage."); // unchanged
                     switch (level) {
                         case 'level1': ScreenVisuals.takeDamage1(); break;
                         case 'level2': ScreenVisuals.takeDamage2(); break;
                         case 'level3': ScreenVisuals.takeDamage3(); break;
                         case 'boss':  ScreenVisuals.takeDamageBoss();  break;
                     }
-                    const damageTaken = Game.calculateDamage(level, player.getShieldProtection()); // unchanged
-                    player.setHealthBar(player.getHealthBar() - damageTaken); // unchanged
+                    const damageTaken = Game.calculateDamage(level, player.getShieldProtection());
+                    player.setHealthBar(player.getHealthBar() - damageTaken);
                 }
             }
         }
@@ -276,15 +218,24 @@ class Dungeon {
             if(parseInt(level.charAt(level.length - 1),10) - 1 == player.getLevelsCompleted()){
                 player.incrementLevelsCompleted();
             }
-            displayMessage("You defeated the monster!");
             console.log(player.getLevelsCompleted())
             player.setBudget(player.getBudget() + 50);
+            await typeMessage(`
+                You have defeated the monster!
+
+                You have completed ${level.charAt(level.length - 1) == "boss" ? "Boss Dungeon" : level}!
+                Your current budget: ${player.getBudget()}
+            `, 50, 50, 28, 5);
+            await new Promise(resolve => setTimeout(resolve, 3000)); //wait 3 seconds before continuing
         } 
         else {
-            displayMessage("You were defeated...");
             player.setBudget(player.getBudget() - 20);
+            await typeMessage(`
+                You have been defeated by the monster!
+
+                Your current budget: ${player.getBudget()}
+            `, 50, 50, 28, 5);
+            await new Promise(resolve => setTimeout(resolve, 3000)); //wait 3 seconds before continuing
         }
-        // display next line
-        displayMessage(`Your current budget: ${player.getBudget()}`, 50, 150);
     }
 }

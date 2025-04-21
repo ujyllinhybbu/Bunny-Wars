@@ -76,19 +76,7 @@ class ScreenVisuals {
     }
 
     static winBossBattleScreen() {
-        displayMessage(`
-            |-----------------------------------------------------------------------------------|
-            |                                                                                   |
-            |                          YOU HAVE DEFEATED THE BOSS BUNNY!                        |
-            |                      The dungeon falls silent... for now.                         |
-            |                                                                                   |
-            |   (\\__/)                                                       |   (x_x)          |
-            |  (^ ,, ^)               "Victory is ours!"                   | (   X   )          |
-            | (  -   - )                                                   +0(       O)         |
-            |  O------O                                                     O------O            |
-            |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
-            |-----------------------------------------------------------------------------------|
-        `);
+        typeMessage(`You have defeated the Boss Bunny!`);
     }
 
     static trainAndComeBackScreen() {

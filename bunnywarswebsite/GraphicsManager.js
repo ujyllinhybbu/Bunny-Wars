@@ -12,14 +12,14 @@ function loadSprite(name, path) {
         img.src = path;
 
         img.onload = () => {
-            console.log(`✅ Sprite "${name}" loaded.`);
+            console.log(`Sprite "${name}" loaded.`);
             sprites[name] = img;
-            resolve(); // 로드 완료 시 Promise 해결
+            resolve(); 
         };
 
         img.onerror = () => {
-            console.error(`❌ Failed to load sprite from "${path}"`);
-            reject(new Error(`Failed to load sprite: ${path}`)); // 로드 실패 시 Promise 거부
+            console.error(`Failed to load sprite from "${path}"`);
+            reject(new Error(`Failed to load sprite: ${path}`));
         };
     });
 }
@@ -28,7 +28,7 @@ function drawSprite(name, x, y, width, height) {
     const sprite = sprites[name];
 
     if (!sprite) {
-        console.warn(`⚠️ Sprite "${name}" not found.`);
+        console.warn(`Sprite "${name}" not found.`);
         return;
     }
 
@@ -37,7 +37,7 @@ function drawSprite(name, x, y, width, height) {
         bgCtx.drawImage(sprite, x, y, width, height);
     } 
     else {
-        console.log(`⏳ Sprite "${name}" not yet complete, waiting...`);
+        console.log(`Sprite "${name}" not yet complete, waiting...`);
         sprite.onload = () => {
             bgCtx.drawImage(sprite, x, y, width, height);
         };
@@ -47,7 +47,7 @@ function drawSprite(name, x, y, width, height) {
 function drawBackground(name){
     const sprite = sprites[name];
     if (!sprite) {
-        console.warn(`⚠️ Background "${name}" not found.`);
+        console.warn(`Background "${name}" not found.`);
         return;
     }
 
@@ -56,7 +56,7 @@ function drawBackground(name){
         bgCtx.drawImage(sprite, 0, 0, bgCanvas.width, bgCanvas.height);
     } 
     else {
-        console.log(`⏳ Background "${name}" not yet complete, waiting...`);
+        console.log(`Background "${name}" not yet complete, waiting...`);
         sprite.onload = () => {
             ctx.drawImage(sprite, 0, 0, bgCanvas.width, bgCanvas.height);
         };
@@ -80,7 +80,6 @@ function typeMessage(message, x = 50, y = 50, lineHeight = 28, typingSpeed = 10)
     let timeoutId = null;
 
     return new Promise((resolve) => {
-        // 공통 완료 함수
         function finishTyping() {
             clearTimeout(timeoutId);
             window.removeEventListener('keydown', onKeyDown);
@@ -88,7 +87,6 @@ function typeMessage(message, x = 50, y = 50, lineHeight = 28, typingSpeed = 10)
             resolve();
         }
 
-        // Enter 키 스킵 핸들러
         function onKeyDown(event) {
             if (event.key === 'Enter') {
                 finishTyping();
@@ -104,7 +102,6 @@ function typeMessage(message, x = 50, y = 50, lineHeight = 28, typingSpeed = 10)
         }
         window.addEventListener('click', onClick);
 
-        // 실제 타이핑
         function typeNext() {
             if (currentLine >= lines.length) {
                 window.removeEventListener('keydown', onKeyDown);
@@ -135,7 +132,7 @@ function typeMessage(message, x = 50, y = 50, lineHeight = 28, typingSpeed = 10)
 }
 
 function clearCanvas() {
-    bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height); // 캔버스 전체 지우기
+    bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height); // Clear the entire canvas
 }
 
 function drawQuestionCentered(text) {

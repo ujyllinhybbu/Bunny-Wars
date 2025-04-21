@@ -42,6 +42,24 @@ canvas {
   #dungeonMenuBox {
     display: none; /* Hidden by default */
     position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  
+    width: 460px;
+    padding: 40px 30px 30px 30px;
+    background-color: #fff7e3;
+    border: 6px solid #6b3e26;
+    border-radius: 12px;
+    font-family: 'Press Start 2P', Courier, monospace;
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 0 8px 0 #dca37c, 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  #shopMenuBox {
+    display: none; /* Hidden by default */
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -56,6 +74,40 @@ canvas {
     font-size: 16px;
     text-align: center;
     box-shadow: 0 8px 0 #dca37c, 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  .shop-detail-menu {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff7e3;
+    border: 4px solid #6b3e26;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+  }
+  
+  .shop-items {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .shop-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .shop-item img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 8px;
+  }
+  
+  .shop-item button {
+    margin-top: 10px;
+    font-family: 'Press Start 2P', Courier, monospace;
   }
   #bunnyIcon {
     width: 128px;
@@ -72,35 +124,34 @@ canvas {
     text-shadow: 1px 1px #fff;
   }
   
-  #menuBox button {
-    display: block;
-    width: 100%;
-    padding: 16px;
-    margin-bottom: 20px;
-    font-family: 'Press Start 2P', Courier, monospace;
-    font-size: 28px;
-    font-weight: bold;
-    background-color: #ffe9bd;
-    border: 3px solid #6b3e26;
-    color: #6b3e26;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s ease, box-shadow 0.2s;
-    box-shadow: 0 4px 0 #c2835c;
-  }
+#menuBox button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
+  font-family: 'Press Start 2P', Courier, monospace;
+  font-size: 28px;
+  font-weight: bold;
+  background-color: #ffe9bd;
+  border: 3px solid #6b3e26;
+  color: #6b3e26;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s ease, box-shadow 0.2s;
+  box-shadow: 0 4px 0 #c2835c;
+}
   
-  #menuBox button:hover {
-    background-color: #ffdb9c;
-    transform: scale(1.03);
-    box-shadow: 0 2px 0 #c2835c;
-  }
+#menuBox button:hover {
+  background-color: #ffdb9c;
+  transform: scale(1.03);
+  box-shadow: 0 2px 0 #c2835c;
+}
   
 
 #menuBox button:hover {
   background-color: #ffe49e;
   transform: scale(1.02);
 }
-
 
 /* Input field styling */
 #game-input {
@@ -128,27 +179,8 @@ canvas {
     font-size: 1.1em;
     cursor: pointer;
 }
-
 #submit-button:hover {
     background-color: green; /* Darker green on hover */
-}
-
-/* Scrollbar styling for the game output */
-#game-output::-webkit-scrollbar {
-    width: 10px;
-}
-
-#game-output::-webkit-scrollbar-track {
-    background: black;
-}
-
-#game-output::-webkit-scrollbar-thumb {
-    background: limegreen;
-    border-radius: 5px;
-}
-
-#game-output::-webkit-scrollbar-thumb:hover {
-    background: green;
 }
 
 #timer-container {
@@ -156,7 +188,7 @@ canvas {
   top: 50%;
   left: 45%;
   transform: translateX(-50%);
-  display: none; /* 기본 숨김 */
+  display: none; /* Hidden by default */
   font-family: 'Press Start 2P', monospace;
   font-size: 16px;
   color: white;

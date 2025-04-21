@@ -1,34 +1,26 @@
 class Game {
     static async introduction() {
-        try {
-            // 배경 로드 후 그리기
-            await GraphicsManager.loadSprite('bg_intro', './assets/bg_intro.png');
-            GraphicsManager.drawBackground('bg_intro'); // 배경 그리기
+        // load background image
+        await GraphicsManager.loadSprite('bg_intro', './assets/bg_intro.png');
+        GraphicsManager.drawBackground('bg_intro'); // 배경 그리기
 
-            // 스프라이트 로드 후 그리기
-            await GraphicsManager.loadSprite('bunny_default', './assets/bunny_default.png');
-            GraphicsManager.drawSprite('bunny_default', 50, 50, 100, 100); // 스프라이트 그리기
+        // printing message
+        await typeMessage(`
+            Welcome to Bunny Wars!
 
-            // 텍스트 출력
-            await typeMessage(`
-                Welcome to Bunny Wars!
+            You are on an adventure as the solo Bunny Hero!
+            Solve six challenging math levels to defeat
+            the Evil Bunny Master's minions and face off
+            against the ultimate EVIL BUNNY BOSS to save the world!
 
-                You are on an adventure as the solo Bunny Hero!
-                Solve six challenging math levels to defeat
-                the Evil Bunny Master's minions and face off
-                against the ultimate EVIL BUNNY BOSS to save the world!
+            NOTICE: You may purchase new unique weapons
+            and gear from the shop to increase offensive
+            and defensive stats.
 
-                NOTICE: You may purchase new unique weapons
-                and gear from the shop to increase offensive
-                and defensive stats.
-
-                Press Enter to continue...
-            `);
-            // 키 입력 대기
-            await Game.waitForEnter();
-        } catch (error) {
-            console.error(error); // 로드 실패 시 에러 처리
-        }
+            Press Enter to continue...
+        `);
+        // wait for user to press Enter
+        await Game.waitForEnter();
     }
 
     static waitForEnter() {
@@ -44,12 +36,12 @@ class Game {
     }
 
     static async menu() {
-        clearCanvas(); // 캔버스 초기화
-        GraphicsManager.drawBackground('bg_intro'); // 메뉴 배경 그리기
+        clearCanvas();
+        GraphicsManager.drawBackground('bg_intro');
         const menuBox = document.getElementById('menuBox');
-        menuBox.style.display = 'block'; // 메뉴 박스 보이기
+        menuBox.style.display = 'block'; // display the menu box
         
-        // 버튼 클릭을 기다리는 Promise 반환
+        // wait for user to click a button
         const choice = await new Promise(resolve => {
             document.getElementById("startBtn").onclick = () => resolve(1);
             document.getElementById("shopBtn").onclick = () => resolve(2);
@@ -146,10 +138,11 @@ class Game {
         return result;
     }
 
+    //damage calculation based on level and shield protection
     static calculateDamage(level, shieldProtection) {
         const baseDamage = {
-            "level1": 30,
-            "level2": 30,
+            "level1": 15,
+            "level2": 20,
             "level3": 30,
             "boss": 50
         }[level] || 0;
