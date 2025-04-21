@@ -5,7 +5,7 @@ class Player {
         this.budget = 0;
         this.weaponDamage = 15;
         this.shieldProtection = 0;
-        this.levelsCompleted = 0;
+        this.levelsCompleted = 3;
     }
 
     getHealthBar() {

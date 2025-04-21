@@ -38,93 +38,41 @@ class ScreenVisuals {
     }
 
     static fightScreen3() {
-        displayMessage(`
-            |-----------------------------------------------------------------------------------|
-            |                                                                                   |
-            |                           Welcome to the Dungeon.                 (ROAR! )        |
-            |                                                                      \\            |
-            |   (\\__/)                                                          (\\__(\\          |
-            |  (. ,, .) |                                                       (X == X)        |
-            | (0      )0+                                                      -(      )-       |
-            |  O------O                                                         O------O        |
-            |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
-            |-----------------------------------------------------------------------------------|
-        `);
+        drawSprite("bunny_default", 200, 400, 100, 100);
+        drawSprite("monster_lv3", 1000, 400, 100, 100);
     }
 
     static doesDamage3() {
-        displayMessage(`
-            |-----------------------------------------------------------------------------------|
-            |                                                                                   |
-            |    (BOW BOW bow!)                                                 (AHHHH!)        |
-            |       /                                                               \\           |
-            |   (\\__/)                                                          (\\__(\\          |
-            |  (. ,, .) |                                                       (X == X)        |
-            | (0      )0+                                                      -(      )-       |
-            |  O------O                                                         O------O        |
-            |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
-            |-----------------------------------------------------------------------------------|
-        `);
+        clearCanvas(); // Clear the canvas before drawing
+        drawBackground("bg_lv3"); // Draw the background again
+        drawSprite("bunny_default", 200, 400, 100, 100); // Draw the bunny sprite again
+        drawSprite("monster_lv3", 1000, 400, 100, 100); // Draw the monster sprite again
     }
 
     static takeDamage3() {
-        displayMessage(`
-            |-----------------------------------------------------------------------------------|
-            |                                                                                   |
-            |      (ouch!)                                                          (muahahaha) |
-            |        /                                                                \\         |
-            |   (\\__/)                                                          (\\__(\\          |
-            |  (- ,, -) |                                                       (X ,, X)        |
-            | (0      )0+                                                       (O    O)        |
-            |  O------O                                                         O------O        |
-            |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
-            |-----------------------------------------------------------------------------------|
-        `);
+        clearCanvas(); // Clear the canvas before drawing
+        drawBackground("bg_lv3"); // Draw the background again
+        drawSprite("bunny_default", 200, 400, 100, 100); // Draw the bunny sprite again
+        drawSprite("monster_lv3", 1000, 400, 100, 100); // Draw the monster sprite again
     }
 
     static fightScreenBoss() {
-        displayMessage(`
-            |-----------------------------------------------------------------------------------|
-            |                                                                                   |
-            |                           Welcome to the THE BOSS.                (grrr..)        |
-            |                                                                  |   \\            |
-            |   (\\__/)                                                        | (\\__(\\          |
-            |  (. ,, .) |                                                      |(X ,, X)        |
-            | (0      )0+                                                      +(O    O)        |
-            |  O------O                                                         O------O        |
-            |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
-            |-----------------------------------------------------------------------------------|
-        `);
+        drawSprite("bunny_default", 200, 400, 100, 100);
+        drawSprite("monster_lv4", 1000, 400, 100, 100);
     }
 
     static doesDamageBoss() {
-        displayMessage(`
-            |-----------------------------------------------------------------------------------|
-            |                                                                                   |
-            |    (BOW BOW BOW!)                                                 (YOOOW!)        |
-            |       /                                                          |    \\           |
-            |   (\\__/)                                                        | (\\__(\\          |
-            |  (. ,, .) |                                                      |(X ,, X)        |
-            | (0      )0+                                                      +(O    O)        |
-            |  O------O                                                         O------O        |
-            |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
-            |-----------------------------------------------------------------------------------|
-        `);
+        clearCanvas(); // Clear the canvas before drawing
+        drawBackground("bg_lv4"); // Draw the background again
+        drawSprite("bunny_default", 200, 400, 100, 100); // Draw the bunny sprite again
+        drawSprite("monster_lv4", 1000, 400, 100, 100); // Draw the monster sprite again
     }
 
     static takeDamageBoss() {
-        displayMessage(`
-            |-----------------------------------------------------------------------------------|
-            |                                                                                   |
-            |      (ouch!)                                                          (heh..)     |
-            |        /                                                         |      \\         |
-            |   (\\__/)                                                        | (\\__(\\          |
-            |  (- ,, -) |                                                      |(X ,, X)        |
-            | (0      )0+                                                      +(O    O)        |
-            |  O------O                                                         O------O        |
-            |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
-            |-----------------------------------------------------------------------------------|
-        `);
+        clearCanvas(); // Clear the canvas before drawing
+        drawBackground("bg_lv4"); // Draw the background again
+        drawSprite("bunny_default", 200, 400, 100, 100); // Draw the bunny sprite again
+        drawSprite("monster_lv4", 1000, 400, 100, 100); // Draw the monster sprite again
     }
 
     static winBossBattleScreen() {

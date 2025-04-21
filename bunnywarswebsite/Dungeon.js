@@ -149,10 +149,14 @@ class Dungeon {
     }
 
     static async bossBattle(player) {
-        Dungeon.showLevelScreen(4, "Boss Battle");
+        await GraphicsManager.loadSprite("bg_lv4", "./assets/bg_lv4.png");
+        await GraphicsManager.loadSprite("monster_lv4", "./assets/monster_lv4.png");
+        await GraphicsManager.drawBackground("bg_lv4");
+        await Dungeon.showLevelScreen(4, "Boss Battle");
         Dungeon.replenishHealth(player);
-
-        let bossHealth = 300;
+        await Dungeon.fightLevel(player, 250, "boss");
+    }
+        /*let bossHealth = 300;
         ScreenVisuals.fightScreenBoss();
 
         while (player.getHealthBar() > 0 && bossHealth > 0) {
@@ -199,8 +203,8 @@ class Dungeon {
             ScreenVisuals.trainAndComeBackScreen();
         }
 
-        displayMessage(`Your current budget: ${player.getBudget()}`);
-    }
+        displayMessage(`Your current budget: ${player.getBudget()}`);*/
+    
 
     static async fightLevel(player, monsterHealth, level) {
         level = level.trim().toLowerCase();

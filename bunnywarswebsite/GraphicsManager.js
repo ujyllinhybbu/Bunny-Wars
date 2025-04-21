@@ -98,7 +98,7 @@ function typeMessage(message, x = 50, y = 50, lineHeight = 28, typingSpeed = 10)
 
         function onClick(event) {
             const id = event.target.id;
-            if (id === 'level1Btn' || id === 'level2Btn' || id === 'level3Btn') {
+            if (id === 'level1Btn' || id === 'level2Btn' || id === 'level3Btn' || id === 'bossBtn') {
                 finishTyping();
             }
         }
