@@ -35,7 +35,6 @@ class Dungeon {
         });
 
         dungeonMenuBox.style.display = 'none';
-
         switch (choice) {
             case '1': await Dungeon.levelOne(player); break;
             case '2': await Dungeon.levelTwo(player); break;
@@ -122,39 +121,39 @@ class Dungeon {
     }
 
     static async levelOne(player) {
+        Dungeon.replenishHealth(player);
         await GraphicsManager.loadSprite("bg_lv1", "./assets/bg_lv1.png");
         await GraphicsManager.loadSprite("monster_lv1", "./assets/monster_lv1.png");
         await GraphicsManager.drawBackground("bg_lv1");
-        await Dungeon.showLevelScreen("1", "Addition & Subtraction");
-        Dungeon.replenishHealth(player);
+        await Dungeon.showLevelScreen("1", "Addition & Subtraction");   
         await Dungeon.fightLevel(player, 50, "level1");
     }
 
     static async levelTwo(player) {
+        Dungeon.replenishHealth(player);
         await GraphicsManager.loadSprite("bg_lv2", "./assets/bg_lv2.png");
         await GraphicsManager.loadSprite("monster_lv2", "./assets/monster_lv2.png");
         await GraphicsManager.drawBackground("bg_lv2");
         await Dungeon.showLevelScreen(2, "Multiplication");
-        Dungeon.replenishHealth(player);
         await Dungeon.fightLevel(player, 100, "level2");
     }
 
     static async levelThree(player) {
+        Dungeon.replenishHealth(player);
         await GraphicsManager.loadSprite("bg_lv3", "./assets/bg_lv3.png");
         await GraphicsManager.loadSprite("monster_lv3", "./assets/monster_lv3.png");
         await GraphicsManager.drawBackground("bg_lv3");
         await Dungeon.showLevelScreen(3, "Exponents");
-        Dungeon.replenishHealth(player);
         await Dungeon.fightLevel(player, 150, "level3");
         
     }
 
     static async bossBattle(player) {
+        Dungeon.replenishHealth(player);
         await GraphicsManager.loadSprite("bg_lv4", "./assets/bg_lv4.png");
         await GraphicsManager.loadSprite("monster_lv4", "./assets/monster_lv4.png");
         await GraphicsManager.drawBackground("bg_lv4");
         await Dungeon.showLevelScreen(4, "Boss Battle");
-        Dungeon.replenishHealth(player);
         await Dungeon.fightLevel(player, 250, "boss");
     }
 
@@ -169,6 +168,8 @@ class Dungeon {
         }
         
         document.getElementById('hpDisplayContainer').style.display = 'flex';
+        const playerHP = document.getElementById('playerHPText');
+        playerHP.innerText = player.getMaxHealthBar();
         const enemyHP = document.getElementById('enemyHPText');
         enemyHP.innerText = monsterHealth;
         while (player.getHealthBar() > 0 && monsterHealth > 0) {
@@ -229,9 +230,11 @@ class Dungeon {
         document.getElementById('game-input').style.display = 'none';
         document.getElementById('submit-button').style.display = 'none';
         document.getElementById('timer-container').style.display = 'none';
+        let unlock = false;
         if (player.getHealthBar() > 0 && monsterHealth <= 0) {
             if(parseInt(level.charAt(level.length - 1),10) - 1 == player.getLevelsCompleted()){
                 player.incrementLevelsCompleted();
+                unlock = true;
             }
             console.log(player.getLevelsCompleted())
             player.setBudget(player.getBudget() + 50);
@@ -241,7 +244,9 @@ class Dungeon {
                 You have completed ${level.charAt(level.length - 1) == "boss" ? "Boss Dungeon" : level}!
                 Your current budget: ${player.getBudget()}
             `, 50, 50, 28, 5);
-            await new Promise(resolve => setTimeout(resolve, 3000)); //wait 3 seconds before continuing
+            if (unlock) {
+                typeMessage(`You unlocked the next level!`, 500, 200, 28, 5);
+            }
         } 
         else {
             player.setBudget(player.getBudget() - 20);
@@ -252,10 +257,9 @@ class Dungeon {
                 Game Over!
 
                 You have been defeated by the monster!
-                
+
                 Select a level to try again.
             `, 50, 50, 28, 5);
-            await new Promise(resolve => setTimeout(resolve, 3000)); //wait 3 seconds before continuing
         }
     }
 }

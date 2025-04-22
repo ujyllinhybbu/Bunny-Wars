@@ -25,7 +25,6 @@ function getPlayerInput(inputText) {
         input.style.display = 'block';
         submit.style.display = 'block';
         input.focus();
-
         const handler = () => {
             const value = input.value.trim();
             input.value = '';
@@ -34,7 +33,6 @@ function getPlayerInput(inputText) {
             submit.removeEventListener('click', handler);
             resolve(value);
         };
-
         submit.addEventListener('click', handler);
     });
 }
