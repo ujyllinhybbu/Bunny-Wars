@@ -44,6 +44,10 @@ class Dungeon {
             case '5': return;
             default: displayMessage("Invalid choice.");
         }
+        // display none for the hp display
+        document.getElementById('hpDisplayContainer').style.display = 'none';
+        // After completing a level, show the dungeon menu again
+        await Dungeon.fightMenu(player);
     }
 
     static showDungeonEntrance() {
@@ -163,20 +167,16 @@ class Dungeon {
             case "level3": ScreenVisuals.fightScreen3(); break;
             case "boss": ScreenVisuals.fightScreenBoss(); break;
         }
-
+        
+        document.getElementById('hpDisplayContainer').style.display = 'flex';
+        const enemyHP = document.getElementById('enemyHPText');
+        enemyHP.innerText = monsterHealth;
         while (player.getHealthBar() > 0 && monsterHealth > 0) {
-            displayMessage(`
-            -- Battle Status --
-            Player HP: ${player.getHealthBar()}
-            Monster HP: ${monsterHealth}
-            -------------------
-            `, 50, 150);
             const question = Game.generateQuestion(level);
             const raw = await getPlayerInputWithTimeout(
-                `Question: ${question}\nEnter answer: `, 
+                `Question: ${question}`, 
                 10000  // 10sec limit
             );
-            let playerAnswer;
             
             if (raw === null) {
                 switch (level) {
@@ -185,8 +185,13 @@ class Dungeon {
                     case "level3": ScreenVisuals.takeDamage3(); break;
                     case "boss":  ScreenVisuals.takeDamageBoss();  break;
                 }
-                const damageTaken = Game.calculateDamage(level, player.getShieldProtection());
-                player.setHealthBar(player.getHealthBar() - damageTaken);
+                const damage = Game.calculateDamage(level, player.getShieldProtection());
+                const prev = player.getHealthBar();
+                player.setHealthBar(prev - damage);
+                if (player.getHealthBar() < 0) {
+                    player.setHealthBar(0);
+                }
+                animateHPDecrease('player', prev, player.getHealthBar());
             } 
             else {
                 const playerAnswer = parseInt(raw, 10); 
@@ -198,7 +203,12 @@ class Dungeon {
                         case 'level3': ScreenVisuals.doesDamage3(); break;
                         case 'boss':  ScreenVisuals.doesDamageBoss();  break;
                     }
+                    const prev = monsterHealth;
                     monsterHealth -= player.getWeaponDamage();
+                    if (monsterHealth < 0) {
+                        monsterHealth = 0;
+                    }
+                    animateHPDecrease('enemy', prev, monsterHealth);
                 } else {
                     switch (level) {
                         case 'level1': ScreenVisuals.takeDamage1(); break;
@@ -206,8 +216,13 @@ class Dungeon {
                         case 'level3': ScreenVisuals.takeDamage3(); break;
                         case 'boss':  ScreenVisuals.takeDamageBoss();  break;
                     }
-                    const damageTaken = Game.calculateDamage(level, player.getShieldProtection());
-                    player.setHealthBar(player.getHealthBar() - damageTaken);
+                    const damage = Game.calculateDamage(level, player.getShieldProtection());
+                    const prev = player.getHealthBar();
+                    player.setHealthBar(prev - damage);
+                    if (player.getHealthBar() < 0) {
+                        player.setHealthBar(0);
+                    }
+                    animateHPDecrease('player', prev, player.getHealthBar());
                 }
             }
         }
@@ -230,10 +245,15 @@ class Dungeon {
         } 
         else {
             player.setBudget(player.getBudget() - 20);
+            if (player.getBudget() < 0) {
+                player.setBudget(0);
+            }
             await typeMessage(`
-                You have been defeated by the monster!
+                Game Over!
 
-                Your current budget: ${player.getBudget()}
+                You have been defeated by the monster!
+                
+                Select a level to try again.
             `, 50, 50, 28, 5);
             await new Promise(resolve => setTimeout(resolve, 3000)); //wait 3 seconds before continuing
         }

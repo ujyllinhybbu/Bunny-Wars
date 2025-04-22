@@ -4,6 +4,8 @@ class Game {
         await GraphicsManager.loadSprite('bg_intro', './assets/bg_intro.png');
         GraphicsManager.drawBackground('bg_intro'); // 배경 그리기
 
+        await GraphicsManager.loadSprite('bunny_default', './assets/bunny_default.png');
+
         // printing message
         await typeMessage(`
             Welcome to Bunny Wars!

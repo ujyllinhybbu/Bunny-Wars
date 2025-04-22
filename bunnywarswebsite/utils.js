@@ -88,3 +88,33 @@ function getPlayerInputWithTimeout(promptText, timeoutMs = 10000) {
         });
     });
 }
+
+function animateHPDecrease(who, from, to, delay = 20) {
+    const hpText = document.getElementById(`${who}HPText`);
+    const popup = document.getElementById(`${who}DamagePopup`);
+    const damage = from - to;
+  
+    // 데미지 팝업 표시
+    popup.textContent = `-${damage}`;
+    popup.style.display = 'inline';
+    popup.classList.remove('damage-popup'); // reset animation
+    void popup.offsetWidth; // reflow
+    popup.classList.add('damage-popup');
+  
+    // 숫자 줄어드는 애니메이션
+    let current = from;
+    const interval = setInterval(() => {
+      if (current <= to) {
+        clearInterval(interval);
+        hpText.textContent = to;
+      } else {
+        current--;
+        hpText.textContent = current;
+      }
+    }, delay);
+  
+    // 일정 시간 뒤 팝업 숨김
+    setTimeout(() => {
+      popup.style.display = 'none';
+    }, 600);
+  }
