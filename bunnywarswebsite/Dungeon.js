@@ -245,7 +245,7 @@ class Dungeon {
                 Your current budget: ${player.getBudget()}
             `, 50, 50, 28, 5);
             if (unlock) {
-                typeMessage(`You unlocked the next level!`, 500, 200, 28, 5);
+                typeMessage(`You unlocked the next level!`, 600, 150, 28, 5);
             }
         } 
         else {

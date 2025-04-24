@@ -41,7 +41,7 @@ canvas {
 #dungeonMenuBox {
   display: none; /* Hidden by default */
   position: absolute;
-  top: 55%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -232,28 +232,28 @@ canvas {
 #hpDisplayContainer {
   display: none; /* Hidden by default */
   position: absolute;
-  top: 10px;
-  left: 0;
-  width: 100%;
+  top: 50%;
+  left: 15%;
+  width: 70%;
   z-index: 10; /* 캔버스보다 위 */
   justify-content: space-between;
   pointer-events: none; /* Prevent mouse events on this element */
 }
 
 .hp-box {
-  margin-top: 550px;
+  /*margin-top: 550px;*/
   position: relative;
   font-family: 'Press Start 2P', monospace;
   font-size: 20px;
   color: white;
   text-shadow: 1px 1px black;
 }
-#playerHPBox {
+/*#playerHPBox {
   margin-left: 350px;
 }
 #enemyHPBox {
   margin-right: 350px;
-}
+}*/
 
 .damage-popup {
   display: none;

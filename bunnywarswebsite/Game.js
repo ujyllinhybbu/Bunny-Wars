@@ -11,7 +11,7 @@ class Game {
             Welcome to Bunny Wars!
 
             You are on an adventure as the solo Bunny Hero!
-            Solve six challenging math levels to defeat
+            Solve four challenging math levels to defeat
             the Evil Bunny Master's minions and face off
             against the ultimate EVIL BUNNY BOSS to save the world!
 
