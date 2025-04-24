@@ -2,7 +2,7 @@ class Player {
     constructor() {
         this.maxHealthBar = 100;
         this.healthBar = this.maxHealthBar;
-        this.budget = 1000;
+        this.budget = 0;
         this.weaponDamage = 15;
         this.shieldProtection = 0;
         this.levelsCompleted = 0;
