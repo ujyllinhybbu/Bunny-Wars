@@ -92,14 +92,14 @@ function animateHPDecrease(who, from, to, delay = 20) {
     const popup = document.getElementById(`${who}DamagePopup`);
     const damage = from - to;
   
-    // 데미지 팝업 표시
+    // display damage popup
     popup.textContent = `-${damage}`;
     popup.style.display = 'inline';
     popup.classList.remove('damage-popup'); // reset animation
     void popup.offsetWidth; // reflow
     popup.classList.add('damage-popup');
   
-    // 숫자 줄어드는 애니메이션
+    // animate HP decrease
     let current = from;
     const interval = setInterval(() => {
       if (current <= to) {
@@ -111,7 +111,7 @@ function animateHPDecrease(who, from, to, delay = 20) {
       }
     }, delay);
   
-    // 일정 시간 뒤 팝업 숨김
+    // hide popup after animation
     setTimeout(() => {
       popup.style.display = 'none';
     }, 600);

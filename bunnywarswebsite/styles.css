@@ -195,7 +195,7 @@ canvas {
 }
 #answerDisplayContainer {
   position: absolute;
-  top: 570px;   /* ← 질문 텍스트 아래에 오도록 Y 좌표 조정 */
+  top: 570px; 
   left: 38%;
   display: flex;
   gap: 10px;
@@ -235,7 +235,7 @@ canvas {
   top: 50%;
   left: 15%;
   width: 70%;
-  z-index: 10; /* 캔버스보다 위 */
+  z-index: 10; 
   justify-content: space-between;
   pointer-events: none; /* Prevent mouse events on this element */
 }
@@ -248,12 +248,6 @@ canvas {
   color: white;
   text-shadow: 1px 1px black;
 }
-/*#playerHPBox {
-  margin-left: 350px;
-}
-#enemyHPBox {
-  margin-right: 350px;
-}*/
 
 .damage-popup {
   display: none;
